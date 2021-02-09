@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -133,11 +128,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Form" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Controller" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Limayrac\Projet_WebSymfony\WebSymfony\src\Controller" />
       <recent name="C:\Users\Damien\PhpstormProjects\WebSymfony\src\Form" />
     </key>
   </component>
@@ -151,6 +147,7 @@
       <updated>1611757042296</updated>
       <workItem from="1611757043777" duration="4879000" />
       <workItem from="1611762113916" duration="1608000" />
+      <workItem from="1612905877145" duration="4019000" />
     </task>
     <servers />
   </component>
