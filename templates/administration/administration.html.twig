@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier
+{% endblock %}
+{% block body %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +10,6 @@
 </head>
 <body>
     <h1>Page d'administration</h1>
-    <a href="{{ path('home') }} ">Page Home</a>
 </body>
 </html>
+{% endblock %}

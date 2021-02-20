@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="" />
+    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Agenda/Agenda.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Agenda/Agenda.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/administration/administration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/administration.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profile/profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile/profile.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,7 +135,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../calendrierwf3" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -148,6 +156,9 @@
       <workItem from="1611757043777" duration="4879000" />
       <workItem from="1611762113916" duration="1608000" />
       <workItem from="1612905877145" duration="4019000" />
+      <workItem from="1613745363334" duration="134000" />
+      <workItem from="1613746001783" duration="581000" />
+      <workItem from="1613829527245" duration="5701000" />
     </task>
     <servers />
   </component>
