@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Subject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Subject|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,17 @@ class SubjectRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Subject::class);
+    }
+
+    /**
+     * @return Subject[]
+     */
+    public function findAllByHour()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.TT_hour = 10')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

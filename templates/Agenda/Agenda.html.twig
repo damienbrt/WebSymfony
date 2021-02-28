@@ -1,15 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier
+{% block title %}Agenda
 {% endblock %}
 {% block body %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Agenda</title>
-</head>
-<body>
-<h1>Page d'agenda</h1>
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Agenda</title>
+    </head>
+    <h1>Page d'agenda</h1>
+
+    <div class="container">
+        <h2>Matières</h2>
+        <div class=""row flex>
+            {% for subject in subjects %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="#">{{ subject.name }}</a>
+                            </h5>
+                            <p class="card-text">{{ subject.TT_hour }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
