@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="" />
+    <list default="true" id="08f3f6be-60b8-4754-ae8e-2447aaf8556a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210127142420.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210127151321.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210220144524.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210228151203.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210228151616.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210228153156.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AgendaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Agenda/Agenda.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Agenda/Agenda.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +28,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
