@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
     {
         // Si user connecter on le dirige vers accueil
         if ($this->getUser()) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('Agenda');
         }
 
         $user = new User();
