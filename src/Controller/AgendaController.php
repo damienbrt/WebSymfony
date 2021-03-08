@@ -2,20 +2,30 @@
 
 namespace App\Controller;
 
+use App\Entity\Subject;
 use App\Repository\CalendarRepository;
-use http\Env\Response;
+use App\Repository\SubjectRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class AgendaController extends AbstractController
 {
+    /**
+     * @var SubjectRepository
+     */
+    private $repository;
+
+    public function __construct(SubjectRepository $Reposit)
+    {
+        $this->repository = $Reposit;
+    }
 
     /**
      * @Route("/agenda", name="Agenda")
-     * @return Response
      */
-    public function Agenda() : Response
+    public function Agenda(Request $request, CalendarRepository $calendar)
     {
         $events = $calendar->findAll();
         $rdvs = [];
@@ -32,6 +42,7 @@ class AgendaController extends AbstractController
             ];
         }
         $data = json_encode($rdvs);
+
         return $this->render('Agenda/Agenda.html.twig',compact('data'));
     }
 }
