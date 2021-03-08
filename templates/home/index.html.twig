@@ -10,6 +10,23 @@
 </head>
 <body>
     <h1>Première page du site !</h1>
+
+    <div class="container">
+        <h2>Matières</h2>
+        <div class=""row flex>
+            {% for user in user %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="#">{{ user.lastname }}</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
 {% endblock %}
