@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Subject;
 use App\Repository\SubjectRepository;
 use Doctrine\Persistence\ObjectManager;
+use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,15 +17,22 @@ class AgendaController extends AbstractController
      */
     private $repository;
 
-    public function __construct(SubjectRepository $Reposit)
+    /**
+     * @var em
+     */
+    private $em;
+
+    public function __construct(SubjectRepository $Reposit, ObjectManager  $em)
     {
         $this->repository = $Reposit;
+        $this->em = $em;
     }
 
     /**
      * @Route("/agenda", name="Agenda")
+     * @return Response
      */
-    public function Agenda(Request $request)
+    public function Agenda() : Response
     {
         /* Creation d'une matière dans la BDD
         $subject = new Subject();
@@ -36,6 +44,7 @@ class AgendaController extends AbstractController
         dump($subject);*/
 
         $subject = $this->repository->findAll();
+        $this->em->flush();
         //$subject = $this->repository->findOneBy(['TT_hour' => 123]);
         //$subject = $this->repository->findAllByHour();
 
