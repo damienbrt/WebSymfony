@@ -1,15 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier
+{% block title %}Profil
 {% endblock %}
+
 {% block body %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
-<h1>Page de profil</h1>
-</body>
-</html>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card b-color mt-4 shadow-sm w-75">
+                <div class="card-header t-color">
+                    <h4 class="my-0 font-weight-normal text-center">
+                        <u>Fiche Utilisateur</u>
+                    </h4>
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <div class="mt-1">
+                            <strong>
+                                <u>Nom & Prénom:</u>
+                            </strong>
+                            {{app.user.lastname}}
+                            {{app.user.firstname}}</div>
+                        <div class="mt-1">
+                            <strong>
+                                <u>Mail:</u>
+                            </strong>
+                            {{ app.user.email }}</div>
+                        <div class="mt-1">
+                            <strong>
+                                <u>Téléphone:</u>
+                            </strong>
+                            {{ app.user.phoneNumber }}</div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

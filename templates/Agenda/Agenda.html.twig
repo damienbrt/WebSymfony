@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Agenda
 {% endblock %}
 {% block body %}
+    {% if is_granted('ROLE_SECRETAIRE') %}
     <head>
         <meta charset="UTF-8">
         <title>Agenda</title>
@@ -13,6 +13,7 @@
         <a href="{{path('calendar_index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin: 5px 5px 5px 0px">Ajouter/Editer un créneau</a>
         <div id="calendrier"></div>
     </div>
+    {% endif %}
 {% endblock %}
 
 

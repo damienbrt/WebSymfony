@@ -18,7 +18,7 @@ use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  *
- * @experimental in 5.1
+ * @experimental in 5.2
  */
 final class SmsMessage implements MessageInterface
 {
@@ -83,7 +83,7 @@ final class SmsMessage implements MessageInterface
     /**
      * @return $this
      */
-    public function transport(string $transport): self
+    public function transport(?string $transport): self
     {
         $this->transport = $transport;
 
