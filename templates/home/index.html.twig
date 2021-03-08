@@ -14,13 +14,14 @@
     <div class="container">
         <h2>Utilisateurs</h2>
         <div class=""row flex>
-            {% for user in user %}
+            {% for user in users %}
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <a href="#">{{ user.lastname }}</a>
                             </h5>
+                            <p class="card-text">{{ user.firstname }}</p>
                         </div>
                     </div>
                 </div>
