@@ -7,23 +7,53 @@
         <meta charset="UTF-8">
         <title>Agenda</title>
     </head>
-    <h1>Page d'agenda</h1>
+    <h1 style="text-align: center">Agenda</h1>
 
     <div class="container">
-        <h2>Matières</h2>
-        <div class=""row flex>
-            {% for subject in subjects %}
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="#">{{ subject.name }}</a>
-                            </h5>
-                            <p class="card-text">{{ subject.TT_hour }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <a href="{{path('calendar_index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin: 5px 5px 5px 0px">Ajouter/Editer un créneau</a>
+        <div id="calendrier"></div>
     </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            let calendarElt = document.querySelector("#calendrier")
+
+            let calendar = new FullCalendar.Calendar(calendarElt, {
+                initialView: "timeGridWeek",
+                locale: "fr",
+                timeZone: "Europe/Paris",
+                headerToolbar: {
+                    start: "prev,next today",
+                    center: "title",
+                    end: "dayGridMonth,timeGridWeek"
+                },
+                events: {{ data|raw }},
+                editable: true,
+                eventResizableFromStart: true,
+            })
+
+            calendar.on('eventChange',(e)=>{
+                let url = `/api/${e.event.id}/edit`
+                let donnees = {
+                    "title" : e.event.title,
+                    "description": e.event.extendedProps.description,
+                    "start" : e.event.start,
+                    "end" : e.event.end,
+                    "backgroundColor" : e.event.backgroundColor,
+                    "borderColor" : e.event.borderColor,
+                    "textColor" : e.event.textColor
+                }
+
+                let xhr = new XMLHttpRequest
+
+                xhr.open("PUT",url)
+                xhr.send(JSON.stringify(donnees))
+            })
+
+            calendar.render()
+        }
+    </script>
 {% endblock %}

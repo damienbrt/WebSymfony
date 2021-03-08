@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Repository\CalendarRepository;
 use App\Repository\SubjectRepository;
 use Doctrine\Persistence\ObjectManager;
 use http\Env\Response;
@@ -34,6 +35,21 @@ class AgendaController extends AbstractController
      */
     public function Agenda() : Response
     {
+        $events = $calendar->findAll();
+        $rdvs = [];
+        foreach ($events as $event){
+            $rdvs[]= [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                'backgroundColor' => $event->getBackgroundColor(),
+                'borderColor' => $event->getBorderColor(),
+                'textColor' => $event->getTextColor(),
+            ];
+        }
+        $data = json_encode($rdvs);
         /* Creation d'une matière dans la BDD
         $subject = new Subject();
         $subject->setName("MatièreTest")
@@ -47,7 +63,7 @@ class AgendaController extends AbstractController
         $this->em->flush();
         //$subject = $this->repository->findOneBy(['TT_hour' => 123]);
         //$subject = $this->repository->findAllByHour();
-
-        return $this->render('Agenda/Agenda.html.twig', ['subjects' => $subject]);
+//, ['subjects' => $subject]
+        return $this->render('Agenda/Agenda.html.twig',compact('data'));
     }
 }

@@ -220,11 +220,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTalents(): Collection
-    {
-        return $this->talents;
-    }
-
     public function getPseudo(): ?string
     {
         return $this->pseudo;
