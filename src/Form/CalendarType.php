@@ -3,7 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Calendar;
+use App\Entity\Subject;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,8 +29,14 @@ class CalendarType extends AbstractType
             ->add('background_color', ColorType::class)
             ->add('border_color', ColorType::class)
             ->add('text_color', ColorType::class)
-            ->add('user')
-        ;
+            ->add('subject', EntityType::class, [
+                'class' => Subject::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.name', 'ASC');
+                },
+                'choice_label' => 'name',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

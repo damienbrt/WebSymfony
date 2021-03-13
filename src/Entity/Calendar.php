@@ -58,6 +58,24 @@ class Calendar
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Subject::class, inversedBy="calendar")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $subject;
+
+    public function getSubject(): ?Subject
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(?Subject $subject): self
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;

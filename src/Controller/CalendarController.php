@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Entity\Calendar;
+use App\Entity\User;
 use App\Form\CalendarType;
 use App\Repository\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CalendarController extends AbstractController
 {
+
+    private $user;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->user = $tokenStorage->getToken()->getUser();
+    }
+
     /**
      * @Route("/", name="calendar_index", methods={"GET"})
      */
@@ -32,6 +42,7 @@ class CalendarController extends AbstractController
     {
         $calendar = new Calendar();
         $form = $this->createForm(CalendarType::class, $calendar);
+        $calendar->setUser($this->user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

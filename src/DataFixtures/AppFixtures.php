@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Subject;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -31,6 +32,13 @@ class AppFixtures extends Fixture
             ->setRoles(['ROLE_ADMIN']);
         // On persiste l'admin
         $manager->persist($admin);
+
+        //Ajout matière
+        $subject = new Subject();
+        $subject->setName('Java')
+            ->setTTHour(100);
+        // On persiste l'admin
+        $manager->persist($subject);
 
         $manager->flush();
     }
