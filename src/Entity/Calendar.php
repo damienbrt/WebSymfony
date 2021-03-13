@@ -52,6 +52,24 @@ class Calendar
      */
     private $text_color;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="calendar")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
