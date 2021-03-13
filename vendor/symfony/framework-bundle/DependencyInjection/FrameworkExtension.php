@@ -230,7 +230,7 @@ class FrameworkExtension extends Extension
         // default in the Form and Validator component). If disabled, an identity
         // translator will be used and everything will still work as expected.
         if ($this->isConfigEnabled($container, $config['translator']) || $this->isConfigEnabled($container, $config['form']) || $this->isConfigEnabled($container, $config['validation'])) {
-            if (!class_exists('Symfony\Component\Translation\Translator') && $this->isConfigEnabled($container, $config['translator'])) {
+            if (!class_exists(Translator::class) && $this->isConfigEnabled($container, $config['translator'])) {
                 throw new LogicException('Translation support cannot be enabled as the Translation component is not installed. Try running "composer require symfony/translation".');
             }
 
@@ -282,7 +282,7 @@ class FrameworkExtension extends Extension
             // mark any env vars found in the ide setting as used
             $container->resolveEnvPlaceholders($ide);
 
-            $container->setParameter('debug.file_link_format', str_replace('%', '%%', ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format')) ?: (isset($links[$ide]) ? $links[$ide] : $ide));
+            $container->setParameter('debug.file_link_format', str_replace('%', '%%', ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format')) ?: ($links[$ide] ?? $ide));
         }
 
         if (!empty($config['test'])) {
@@ -318,14 +318,14 @@ class FrameworkExtension extends Extension
         $this->registerSecurityCsrfConfiguration($config['csrf_protection'], $container, $loader);
 
         if ($this->isConfigEnabled($container, $config['form'])) {
-            if (!class_exists('Symfony\Component\Form\Form')) {
+            if (!class_exists(\Symfony\Component\Form\Form::class)) {
                 throw new LogicException('Form support cannot be enabled as the Form component is not installed. Try running "composer require symfony/form".');
             }
 
             $this->formConfigEnabled = true;
             $this->registerFormConfiguration($config, $container, $loader);
 
-            if (class_exists('Symfony\Component\Validator\Validation')) {
+            if (class_exists(\Symfony\Component\Validator\Validation::class)) {
                 $config['validation']['enabled'] = true;
             } else {
                 $container->setParameter('validator.translation_domain', 'validators');
@@ -338,7 +338,7 @@ class FrameworkExtension extends Extension
         }
 
         if ($this->isConfigEnabled($container, $config['assets'])) {
-            if (!class_exists('Symfony\Component\Asset\Package')) {
+            if (!class_exists(\Symfony\Component\Asset\Package::class)) {
                 throw new LogicException('Asset support cannot be enabled as the Asset component is not installed. Try running "composer require symfony/asset".');
             }
 
@@ -406,7 +406,7 @@ class FrameworkExtension extends Extension
         $this->registerSecretsConfiguration($config['secrets'], $container, $loader);
 
         if ($this->isConfigEnabled($container, $config['serializer'])) {
-            if (!class_exists('Symfony\Component\Serializer\Serializer')) {
+            if (!class_exists(\Symfony\Component\Serializer\Serializer::class)) {
                 throw new LogicException('Serializer support cannot be enabled as the Serializer component is not installed. Try running "composer require symfony/serializer-pack".');
             }
 
@@ -810,9 +810,7 @@ class FrameworkExtension extends Extension
             // Create Workflow
             $workflowDefinition = new ChildDefinition(sprintf('%s.abstract', $type));
             $workflowDefinition->replaceArgument(0, new Reference(sprintf('%s.definition', $workflowId)));
-            if (isset($markingStoreDefinition)) {
-                $workflowDefinition->replaceArgument(1, $markingStoreDefinition);
-            }
+            $workflowDefinition->replaceArgument(1, $markingStoreDefinition ?? null);
             $workflowDefinition->replaceArgument(3, $name);
             $workflowDefinition->replaceArgument(4, $workflow['events_to_dispatch']);
 
@@ -901,7 +899,7 @@ class FrameworkExtension extends Extension
         $debug = $container->getParameter('kernel.debug');
 
         if ($debug) {
-            $container->setParameter('debug.container.dump', '%kernel.cache_dir%/%kernel.container_class%.xml');
+            $container->setParameter('debug.container.dump', '%kernel.build_dir%/%kernel.container_class%.xml');
         }
 
         if ($debug && class_exists(Stopwatch::class)) {
@@ -1079,7 +1077,7 @@ class FrameworkExtension extends Extension
             } else {
                 // let format fallback to main version_format
                 $format = $package['version_format'] ?: $config['version_format'];
-                $version = isset($package['version']) ? $package['version'] : null;
+                $version = $package['version'] ?? null;
                 $version = $this->createVersion($container, $version, $format, $package['json_manifest_path'], $name);
             }
 
@@ -1173,18 +1171,18 @@ class FrameworkExtension extends Extension
         $dirs = [];
         $transPaths = [];
         $nonExistingDirs = [];
-        if (class_exists('Symfony\Component\Validator\Validation')) {
-            $r = new \ReflectionClass('Symfony\Component\Validator\Validation');
+        if (class_exists(\Symfony\Component\Validator\Validation::class)) {
+            $r = new \ReflectionClass(\Symfony\Component\Validator\Validation::class);
 
             $dirs[] = $transPaths[] = \dirname($r->getFileName()).'/Resources/translations';
         }
-        if (class_exists('Symfony\Component\Form\Form')) {
-            $r = new \ReflectionClass('Symfony\Component\Form\Form');
+        if (class_exists(\Symfony\Component\Form\Form::class)) {
+            $r = new \ReflectionClass(\Symfony\Component\Form\Form::class);
 
             $dirs[] = $transPaths[] = \dirname($r->getFileName()).'/Resources/translations';
         }
-        if (class_exists('Symfony\Component\Security\Core\Exception\AuthenticationException')) {
-            $r = new \ReflectionClass('Symfony\Component\Security\Core\Exception\AuthenticationException');
+        if (class_exists(\Symfony\Component\Security\Core\Exception\AuthenticationException::class)) {
+            $r = new \ReflectionClass(\Symfony\Component\Security\Core\Exception\AuthenticationException::class);
 
             $dirs[] = $transPaths[] = \dirname($r->getFileName(), 2).'/Resources/translations';
         }
@@ -1222,24 +1220,26 @@ class FrameworkExtension extends Extension
         // Register translation resources
         if ($dirs) {
             $files = [];
-            $finder = Finder::create()
-                ->followLinks()
-                ->files()
-                ->filter(function (\SplFileInfo $file) {
-                    return 2 <= substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
-                })
-                ->in($dirs)
-                ->sortByName()
-            ;
 
-            foreach ($finder as $file) {
-                $fileNameParts = explode('.', basename($file));
-                $locale = $fileNameParts[\count($fileNameParts) - 2];
-                if (!isset($files[$locale])) {
-                    $files[$locale] = [];
+            foreach ($dirs as $dir) {
+                $finder = Finder::create()
+                    ->followLinks()
+                    ->files()
+                    ->filter(function (\SplFileInfo $file) {
+                        return 2 <= substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
+                    })
+                    ->in($dir)
+                    ->sortByName()
+                ;
+                foreach ($finder as $file) {
+                    $fileNameParts = explode('.', basename($file));
+                    $locale = $fileNameParts[\count($fileNameParts) - 2];
+                    if (!isset($files[$locale])) {
+                        $files[$locale] = [];
+                    }
+
+                    $files[$locale][] = (string) $file;
                 }
-
-                $files[$locale][] = (string) $file;
             }
 
             $projectDir = $container->getParameter('kernel.project_dir');
@@ -1282,7 +1282,7 @@ class FrameworkExtension extends Extension
             return;
         }
 
-        if (!class_exists('Symfony\Component\Validator\Validation')) {
+        if (!class_exists(\Symfony\Component\Validator\Validation::class)) {
             throw new LogicException('Validation support cannot be enabled as the Validator component is not installed. Try running "composer require symfony/validator".');
         }
 
@@ -1349,8 +1349,8 @@ class FrameworkExtension extends Extension
             $files['yaml' === $extension ? 'yml' : $extension][] = $path;
         };
 
-        if (interface_exists('Symfony\Component\Form\FormInterface')) {
-            $reflClass = new \ReflectionClass('Symfony\Component\Form\FormInterface');
+        if (interface_exists(\Symfony\Component\Form\FormInterface::class)) {
+            $reflClass = new \ReflectionClass(\Symfony\Component\Form\FormInterface::class);
             $fileRecorder('xml', \dirname($reflClass->getFileName()).'/Resources/config/validation.xml');
         }
 
@@ -1411,7 +1411,7 @@ class FrameworkExtension extends Extension
             return;
         }
 
-        if (!class_exists('Doctrine\Common\Annotations\Annotation')) {
+        if (!class_exists(\Doctrine\Common\Annotations\Annotation::class)) {
             throw new LogicException('Annotations cannot be enabled as the Doctrine Annotation library is not installed.');
         }
 
@@ -1423,7 +1423,7 @@ class FrameworkExtension extends Extension
         }
 
         if ('none' !== $config['cache']) {
-            if (!class_exists('Doctrine\Common\Cache\CacheProvider')) {
+            if (!class_exists(\Doctrine\Common\Cache\CacheProvider::class)) {
                 throw new LogicException('Annotations cannot be enabled as the Doctrine Cache library is not installed.');
             }
 
@@ -1443,8 +1443,8 @@ class FrameworkExtension extends Extension
                 }
 
                 $container
-                    ->getDefinition('annotations.filesystem_cache')
-                    ->replaceArgument(0, $cacheDir)
+                    ->getDefinition('annotations.filesystem_cache_adapter')
+                    ->replaceArgument(2, $cacheDir)
                 ;
 
                 $cacheService = 'annotations.filesystem_cache';
@@ -1534,7 +1534,7 @@ class FrameworkExtension extends Extension
             return;
         }
 
-        if (!class_exists('Symfony\Component\Security\Csrf\CsrfToken')) {
+        if (!class_exists(\Symfony\Component\Security\Csrf\CsrfToken::class)) {
             throw new LogicException('CSRF support cannot be enabled as the Security CSRF component is not installed. Try running "composer require symfony/security-csrf".');
         }
 
@@ -1649,7 +1649,7 @@ class FrameworkExtension extends Extension
 
         $loader->load('property_info.php');
 
-        if (interface_exists('phpDocumentor\Reflection\DocBlockFactoryInterface')) {
+        if (interface_exists(\phpDocumentor\Reflection\DocBlockFactoryInterface::class)) {
             $definition = $container->register('property_info.php_doc_extractor', 'Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor');
             $definition->addTag('property_info.description_extractor', ['priority' => -1000]);
             $definition->addTag('property_info.type_extractor', ['priority' => -1001]);
@@ -2071,8 +2071,8 @@ class FrameworkExtension extends Extension
         }
 
         if ($responseFactoryId = $config['mock_response_factory'] ?? null) {
-            $container->getDefinition($httpClientId)
-                ->setClass(MockHttpClient::class)
+            $container->register($httpClientId.'.mock_client', MockHttpClient::class)
+                ->setDecoratedService($httpClientId, null, -10) // lower priority than TraceableHttpClient
                 ->setArguments([new Reference($responseFactoryId)]);
         }
     }
@@ -2305,6 +2305,7 @@ class FrameworkExtension extends Extension
                 case 'x-forwarded-host': $trustedHeaders |= Request::HEADER_X_FORWARDED_HOST; break;
                 case 'x-forwarded-proto': $trustedHeaders |= Request::HEADER_X_FORWARDED_PROTO; break;
                 case 'x-forwarded-port': $trustedHeaders |= Request::HEADER_X_FORWARDED_PORT; break;
+                case 'x-forwarded-prefix': $trustedHeaders |= Request::HEADER_X_FORWARDED_PREFIX; break;
             }
         }
 
