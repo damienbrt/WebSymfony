@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\PlanningType;
 use App\Entity\Subject;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -33,12 +34,38 @@ class AppFixtures extends Fixture
         // On persiste l'admin
         $manager->persist($admin);
 
+        // Creation d'un formateur
+        $admin = new User();
+        $admin->setEmail('formateur@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'formateur'
+            ))
+            ->setLastname('admin')
+            ->setFirstname('admin')
+            ->setPhoneNumber('+33612345678')
+            ->setRoles(['ROLE_ADMIN']);
+        // On persiste l'admin
+        $manager->persist($admin);
+
         //Ajout matière
         $subject = new Subject();
         $subject->setName('Java')
             ->setTTHour(100);
         // On persiste l'admin
         $manager->persist($subject);
+
+        //Ajout planning type Général
+        $planning_type = new PlanningType();
+        $planning_type->setName('Général');
+        // On persiste l'admin
+        $manager->persist($planning_type);
+
+        //Ajout planning type Disponibilité
+        $planning_type = new PlanningType();
+        $planning_type->setName('Disponibilité');
+        // On persiste l'admin
+        $manager->persist($planning_type);
 
         $manager->flush();
     }

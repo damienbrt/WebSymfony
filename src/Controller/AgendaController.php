@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Entity\User;
 use App\Repository\CalendarRepository;
 use App\Repository\SubjectRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AgendaController extends AbstractController
 {
@@ -17,9 +19,12 @@ class AgendaController extends AbstractController
      */
     private $repository;
 
-    public function __construct(SubjectRepository $Reposit)
+    private $user;
+
+    public function __construct(SubjectRepository $Reposit, TokenStorageInterface $tokenStorage)
     {
         $this->repository = $Reposit;
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -30,6 +35,7 @@ class AgendaController extends AbstractController
         $events = $calendar->findAll();
         $rdvs = [];
         foreach ($events as $event){
+            //if($event->getPlanningType()->getId() == 1){
             $rdvs[]= [
                 'id' => $event->getId(),
                 'start' => $event->getStart()->format('Y-m-d H:i:s'),
@@ -40,6 +46,7 @@ class AgendaController extends AbstractController
                 'borderColor' => $event->getBorderColor(),
                 'textColor' => $event->getTextColor(),
             ];
+            //}
         }
         $data = json_encode($rdvs);
 

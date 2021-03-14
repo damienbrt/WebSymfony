@@ -64,6 +64,24 @@ class Calendar
      */
     private $subject;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PlanningType::class, inversedBy="calendar")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $planning_type;
+
+    public function getPlanningType(): ?PlanningType
+    {
+        return $this->planning_type;
+    }
+
+    public function setPlanningType(?PlanningType $planning_type): self
+    {
+        $this->planning_type = $planning_type;
+
+        return $this;
+    }
+
     public function getSubject(): ?Subject
     {
         return $this->subject;
