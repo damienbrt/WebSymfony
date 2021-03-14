@@ -56,16 +56,16 @@ class AppFixtures extends Fixture
         $manager->persist($subject);
 
         //Ajout planning type Général
-        $planning_type = new PlanningType();
-        $planning_type->setName('Général');
+        $planning_type1 = new PlanningType();
+        $planning_type1->setName('Général');
         // On persiste l'admin
-        $manager->persist($planning_type);
+        $manager->persist($planning_type1);
 
         //Ajout planning type Disponibilité
-        $planning_type = new PlanningType();
-        $planning_type->setName('Disponibilité');
+        $planning_type2 = new PlanningType();
+        $planning_type2->setName('Disponibilité');
         // On persiste l'admin
-        $manager->persist($planning_type);
+        $manager->persist($planning_type2);
 
         $manager->flush();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\PlanningType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Entity\Calendar;
 use App\Form\CalendarType;
@@ -42,6 +43,9 @@ class CalendarController extends AbstractController
         $calendar = new Calendar();
         $form = $this->createForm(CalendarType::class, $calendar);
         $calendar->setUser($this->user);
+        $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(1);
+        $calendar->setPlanningType($planning_type);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

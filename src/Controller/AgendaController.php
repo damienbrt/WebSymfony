@@ -34,22 +34,22 @@ class AgendaController extends AbstractController
     {
         $events = $calendar->findAll();
         $rdvs = [];
-        foreach ($events as $event){
-            //if($event->getPlanningType()->getId() == 1){
-            $rdvs[]= [
-                'id' => $event->getId(),
-                'start' => $event->getStart()->format('Y-m-d H:i:s'),
-                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
-                'title' => $event->getTitle(),
-                'description' => $event->getDescription(),
-                'backgroundColor' => $event->getBackgroundColor(),
-                'borderColor' => $event->getBorderColor(),
-                'textColor' => $event->getTextColor(),
-            ];
-            //}
+        foreach ($events as $event) {
+            if ($event->getPlanningType()->getId() == 1) {
+                $rdvs[] = [
+                    'id' => $event->getId(),
+                    'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                    'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                    'title' => $event->getTitle(),
+                    'description' => $event->getDescription(),
+                    'backgroundColor' => $event->getBackgroundColor(),
+                    'borderColor' => $event->getBorderColor(),
+                    'textColor' => $event->getTextColor(),
+                ];
+            }
         }
         $data = json_encode($rdvs);
 
-        return $this->render('Agenda/Agenda.html.twig',compact('data'));
+        return $this->render('Agenda/Agenda.html.twig', compact('data'));
     }
 }
