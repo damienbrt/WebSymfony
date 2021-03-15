@@ -30,9 +30,15 @@ class CalendarController extends AbstractController
      */
     public function index(CalendarRepository $calendarRepository): Response
     {
-        return $this->render('calendar/index.html.twig', [
-            'calendars' => $calendarRepository->findAll(),
-        ]);
+        if ($this->user->getRoles() != ["ROLE_SECRETAIRE"]) {
+            return $this->render('calendar/index.html.twig', [
+                'calendars' => $calendarRepository->findBy(['user' => $this->user]),
+            ]);
+        } else {
+            return $this->render('calendar/index.html.twig', [
+                'calendars' => $calendarRepository->findAll(),
+            ]);
+        }
     }
 
     /**
@@ -43,8 +49,13 @@ class CalendarController extends AbstractController
         $calendar = new Calendar();
         $form = $this->createForm(CalendarType::class, $calendar);
         $calendar->setUser($this->user);
-        $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(1);
-        $calendar->setPlanningType($planning_type);
+        if ($this->user->getRoles() != ["ROLE_SECRETAIRE"]) {
+            $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(2);
+            $calendar->setPlanningType($planning_type);
+        }else{
+            $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(1);
+            $calendar->setPlanningType($planning_type);
+        }
 
         $form->handleRequest($request);
 
@@ -97,7 +108,7 @@ class CalendarController extends AbstractController
      */
     public function delete(Request $request, Calendar $calendar): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$calendar->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $calendar->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($calendar);
             $entityManager->flush();

@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Subject;
-use App\Entity\User;
 use App\Repository\CalendarRepository;
 use App\Repository\SubjectRepository;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;

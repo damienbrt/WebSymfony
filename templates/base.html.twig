@@ -35,31 +35,35 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="{{ path('planning_former') }}">Planning formateurs</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             {% if is_granted('ROLE_ADMIN') %}
-            <a class="navbar-brand" href="{{ path('admin') }}">Administration</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            {% endif %}
-            <div style="margin-left: auto;">
-            <a class="navbar-brand" href="{{ path('profile') }}" >Mon profil</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            {% if app.user %}
-                <a class="navbar-brand" style="margin-left: auto;" href="{{ path('app_logout') }}">Logout</a>
+                <a class="navbar-brand" href="{{ path('admin') }}">Administration</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             {% endif %}
+            <div style="margin-left: auto;">
+
+                <a class="navbar-brand" href="{{ path('profile') }}">Mon Profil</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% if app.user %}
+                    <a class="navbar-brand" style="margin-left: auto;" href="{{ path('app_logout') }}">Logout</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                {% endif %}
             </div>
         </nav>
     </header>
