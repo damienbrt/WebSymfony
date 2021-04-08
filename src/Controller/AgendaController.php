@@ -45,6 +45,21 @@ class AgendaController extends AbstractController
                 ];
             }
         }
+
+        $json = file_get_contents('https://etalab.github.io/jours-feries-france-data/json/metropole.json');
+        $objs = json_decode($json);
+        foreach($objs as $key => $value){
+            $rdvs[]=[
+                'start' => $key.' 00:00:00',
+                'end' => $key.' 24:00:00',
+                'title' => $value,
+                'description' => $value,
+                'backgroundColor' => '#ff8585',
+                'borderColor' => '#000000',
+                'textColor' => '#000000',
+            ];
+        }
+
         $data = json_encode($rdvs);
 
         return $this->render('Agenda/Agenda.html.twig', compact('data'));

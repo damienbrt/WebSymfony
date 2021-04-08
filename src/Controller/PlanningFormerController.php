@@ -48,6 +48,12 @@ class PlanningFormerController extends AbstractController
         }
         $data = json_encode($rdvs);
 
-        return $this->render('planning_former/index.html.twig', compact('data'));
+        $User = new User();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $em = $this->getDoctrine()->getManager();
+        $User = $repository->findAll();
+        $em->flush();
+
+        return $this->render('planning_former/index.html.twig', compact('data','User'));
     }
 }

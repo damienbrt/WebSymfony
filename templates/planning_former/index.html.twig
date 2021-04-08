@@ -8,15 +8,11 @@
     </head>
     <h1 style="text-align: center">Planning formateur</h1>
 
-
-    <select name="pets" id="pet-select">
-        <option value="">--Please choose an option--</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="hamster">Hamster</option>
-        <option value="parrot">Parrot</option>
-        <option value="spider">Spider</option>
-        <option value="goldfish">Goldfish</option>
+    <!-- liste = comande retourne liste util -->
+    <select name="users" id="user-select">
+        {% for user in User %}
+            <option value="{{ user.id }}">{{ user.pseudo }}</option>
+        {% endfor %}
     </select>
 
     <div class="container">
