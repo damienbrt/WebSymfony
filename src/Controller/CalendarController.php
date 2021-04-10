@@ -30,13 +30,13 @@ class CalendarController extends AbstractController
      */
     public function index(CalendarRepository $calendarRepository): Response
     {
-        if ($this->user->getRoles() != ["ROLE_SECRETAIRE"]) {
+        if (in_array('ROLE_ADMIN', $this->user->getRoles()) || in_array('ROLE_SECRETAIRE', $this->user->getRoles())) {
             return $this->render('calendar/index.html.twig', [
-                'calendars' => $calendarRepository->findBy(['user' => $this->user]),
+                'calendars' => $calendarRepository->findAll(),
             ]);
         } else {
             return $this->render('calendar/index.html.twig', [
-                'calendars' => $calendarRepository->findAll(),
+                'calendars' => $calendarRepository->findBy(['user' => $this->user]),
             ]);
         }
     }
@@ -52,7 +52,7 @@ class CalendarController extends AbstractController
         if ($this->user->getRoles() != ["ROLE_SECRETAIRE"]) {
             $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(2);
             $calendar->setPlanningType($planning_type);
-        }else{
+        } else {
             $planning_type = $this->getDoctrine()->getRepository(PlanningType::class)->find(1);
             $calendar->setPlanningType($planning_type);
         }

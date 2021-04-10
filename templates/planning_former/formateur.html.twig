@@ -2,20 +2,23 @@
 {% block title %}Planning formateur
 {% endblock %}
 {% block body %}
-    {% if is_granted('ROLE_FORMATEUR') %}
+    {% if is_granted('ROLE_SECRETAIRE') %}
         <head>
             <meta charset="UTF-8">
             <title>Planning formateur</title>
         </head>
         <h1 style="text-align: center">Planning formateur</h1>
-        {% if is_granted('ROLE_SECRETAIRE') %}
-            <div class="list-group" style="width: 200px; position: absolute">
-                {% for user in User %}
-                    <a href="former/formateur/{{ user.id }}"
-                       class="list-group-item list-group-item-action">{{ user.pseudo }}</a>
-                {% endfor %}
-            </div>
-        {% endif %}
+
+        <div class="list-group" style="width: 200px; position: absolute">
+            {% for user in User %}
+                {% if user.id == id %}
+                    <a href="{{ user.id }}" class="list-group-item list-group-item-action active">{{ user.pseudo }}</a>
+                {% else %}
+                    <a href="{{ user.id }}" class="list-group-item list-group-item-action">{{ user.pseudo }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
         <div class="container">
             <a href="{{ path('calendar_index') }}" class="btn btn-primary btn-lg active" role="button"
                aria-pressed="true"
@@ -58,7 +61,6 @@
                 eventClick: function(info) {
                     edit(info.event.id)
                 }
-
             })
 
             calendar.on('eventChange', (e) => {
@@ -70,7 +72,7 @@
                     "end": e.event.end,
                     "backgroundColor": e.event.backgroundColor,
                     "borderColor": e.event.borderColor,
-                    "textColor": e.event.textColor
+                    "textColor": e.event.textColor,
                 }
 
                 let xhr = new XMLHttpRequest

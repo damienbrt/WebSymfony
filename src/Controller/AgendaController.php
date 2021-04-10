@@ -42,6 +42,8 @@ class AgendaController extends AbstractController
                     'backgroundColor' => $event->getBackgroundColor(),
                     'borderColor' => $event->getBorderColor(),
                     'textColor' => $event->getTextColor(),
+                    'user' => $event->getUser()->getPseudo(),
+                    'subject' => $event->getSubject()->getName(),
                 ];
             }
         }
@@ -57,6 +59,7 @@ class AgendaController extends AbstractController
                 'backgroundColor' => '#ff8585',
                 'borderColor' => '#000000',
                 'textColor' => '#000000',
+                'editable' => false,
             ];
         }
 

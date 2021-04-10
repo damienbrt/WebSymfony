@@ -3,11 +3,13 @@
 {% block title %}Edit Calendar{% endblock %}
 
 {% block body %}
-    <h1>Edit Calendar</h1>
+    {% if is_granted('ROLE_FORMATEUR') %}
+        <h1>Edit Calendar</h1>
 
-    {{ include('calendar/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('calendar/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('calendar_index') }}">back to list</a>
+        <a href="{{ path('calendar_index') }}">back to list</a>
 
-    {{ include('calendar/_delete_form.html.twig') }}
+        {{ include('calendar/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}
