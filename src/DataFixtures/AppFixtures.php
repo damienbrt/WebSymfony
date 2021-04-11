@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // Creation d'un admin
+        // Creation d'admin
         $admin = new User();
         $admin->setEmail('admin@websymfony.fr')
             ->setPassword($this->passwordEncoder->encodePassword(
@@ -34,26 +34,118 @@ class AppFixtures extends Fixture
         // On persiste l'admin
         $manager->persist($admin);
 
-        // Creation d'un formateur
+
+
+        // Creation des secretaire
         $admin = new User();
-        $admin->setEmail('formateur@websymfony.fr')
+        $admin->setEmail('sercretaire1@websymfony.fr')
             ->setPassword($this->passwordEncoder->encodePassword(
                 $admin,
-                'formateur'
+                'sercretaire1'
             ))
-            ->setLastname('admin')
-            ->setFirstname('admin')
+            ->setLastname('sercretaire1')
+            ->setFirstname('sercretaire1')
             ->setPhoneNumber('+33612345678')
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles(['ROLE_SECRETAIRE']);
+        // On persiste l'sercretaire
+        $manager->persist($admin);
+
+        $admin = new User();
+        $admin->setEmail('sercretaire2@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'sercretaire2'
+            ))
+            ->setLastname('sercretaire2')
+            ->setFirstname('sercretaire2')
+            ->setPhoneNumber('+33612345678')
+            ->setRoles(['ROLE_SECRETAIRE']);
+        // On persiste l'sercretaire
+        $manager->persist($admin);
+// Creation de formateurs
+        $admin = new User();
+        $admin->setEmail('formateur1@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'formateur1'
+            ))
+            ->setLastname('formateur1')
+            ->setFirstname('f1')
+            ->setPhoneNumber('+33612345678')
+            ->setRoles(['ROLE_FORMATEUR']);
         // On persiste l'admin
+        $manager->persist($admin);
+
+        $admin = new User();
+        $admin->setEmail('formateur2@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'formateur2'
+            ))
+            ->setLastname('formateur2')
+            ->setFirstname('f2')
+            ->setPhoneNumber('+33612345678')
+            ->setRoles(['ROLE_FORMATEUR']);
+        // On persiste le formateur
+        $manager->persist($admin);
+
+        $admin = new User();
+        $admin->setEmail('formateur3@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'formateur3'
+            ))
+            ->setLastname('formateur3')
+            ->setFirstname('f3')
+            ->setPhoneNumber('+33612345678')
+            ->setRoles(['ROLE_FORMATEUR']);
+        // On persiste le formateur
+        $manager->persist($admin);
+
+        $admin = new User();
+        $admin->setEmail('user@websymfony.fr')
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                'user'
+            ))
+            ->setLastname('user')
+            ->setFirstname('user')
+            ->setPhoneNumber('+33612345678');
+        // On persiste le formateur
         $manager->persist($admin);
 
         //Ajout matière
         $subject = new Subject();
         $subject->setName('Java')
             ->setTTHour(100);
-        // On persiste l'admin
+        // On persiste la matiere
         $manager->persist($subject);
+
+        $subject = new Subject();
+        $subject->setName('Microsoft')
+            ->setTTHour(100);
+        // On persiste la matiere
+        $manager->persist($subject);
+
+        $subject = new Subject();
+        $subject->setName('Anglais')
+            ->setTTHour(100);
+        // On persiste la matiere
+        $manager->persist($subject);
+
+        $subject = new Subject();
+        $subject->setName('Virtualisation')
+            ->setTTHour(100);
+        // On persiste la matiere
+        $manager->persist($subject);
+
+        $subject = new Subject();
+        $subject->setName('CCNA')
+            ->setTTHour(100);
+        // On persiste la matiere
+        $manager->persist($subject);
+
+
 
         //Ajout planning type Général
         $planning_type1 = new PlanningType();

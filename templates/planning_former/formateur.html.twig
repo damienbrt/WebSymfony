@@ -18,7 +18,6 @@
                 {% endif %}
             {% endfor %}
         </div>
-
         <div class="container">
             <a href="{{ path('calendar_index') }}" class="btn btn-primary btn-lg active" role="button"
                aria-pressed="true"
@@ -32,7 +31,7 @@
 {% block javascripts %}
     <script>
         function edit(id) {
-            return window.location.href = "http://localhost:8000/calendar/"+id+"/edit";
+            return window.location.href = "http://localhost:8000/calendar/" + id + "/edit";
         }
 
         window.onload = () => {
@@ -53,12 +52,12 @@
                 slotMinTime: '07:00', // a start time (7am in this example)
                 slotMaxTime: '19:00', // an end time (7pm in this example)
                 weekends: false,
-                eventContent: function(info) {
-                    if(info.event.extendedProps.user){
+                eventContent: function (info) {
+                    if (info.event.extendedProps.user) {
                         return info.event.extendedProps.subject + ' | ' + info.event.extendedProps.user;
                     }
                 },
-                eventClick: function(info) {
+                eventClick: function (info) {
                     edit(info.event.id)
                 }
             })
